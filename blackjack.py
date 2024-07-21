@@ -40,6 +40,48 @@ class Blackjack:
             num_aces -= 1
         return total
     
+    def print_hands(self, reveal_dealer=False):
+        print("\nPlayer's Hand:", ", ".join([f"{card[0]} of {card[1]}" for card in self.player_hand]))
+        print("Player's Score:", self.player_score)
+        
+        if reveal_dealer:
+            print("\nDealer's Hand:", ", ".join([f"{card[0]} of {card[1]}" for card in self.dealer_hand]))
+            print("Dealer's Score:", self.dealer_score)
+        else:
+            print("\nDealer's Hand:", f"{self.dealer_hand[0][0]} of {self.dealer_hand[0][1]}, Hidden")
+    
+    def player_turn(self):
+        while not self.game_over:
+            self.print_hands()
+            action = input("Do you want to hit or stand? (h/s): ").lower()
+            if action == 'h':
+                self.player_hand.append(self.deck.pop())
+                self.player_score = self.calculate_hand_value(self.player_hand)
+                if self.player_score > 21:
+                    print("\nPlayer busts! Dealer wins.")
+                    self.game_over = True
+            elif action == 's':
+                break
+            else:
+                print("Invalid input! Please enter 'h' or 's'.")
+    
+    def dealer_turn(self):
+        while self.dealer_score < 17 and not self.game_over:
+            self.dealer_hand.append(self.deck.pop())
+            self.dealer_score = self.calculate_hand_value(self.dealer_hand)
+        
+        self.print_hands(reveal_dealer=True)
+        
+        if self.dealer_score > 21:
+            print("\nDealer busts! Player wins.")
+        elif self.dealer_score > self.player_score:
+            print("\nDealer wins.")
+        elif self.dealer_score < self.player_score:
+            print("\nPlayer wins!")
+        else:
+            print("\nIt's a tie!")
+        
+        self.game_over = True
     
     def play_game(self):
         print("Welcome to Blackjack!")
