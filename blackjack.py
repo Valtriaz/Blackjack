@@ -91,7 +91,6 @@ class Blackjack:
         self.player_score = self.calculate_hand_value(self.player_hand)
         self.dealer_score = self.calculate_hand_value(self.dealer_hand)
         
-        self.print_hands()
         self.player_turn()
         
         if not self.game_over:
