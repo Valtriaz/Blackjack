@@ -16,6 +16,8 @@ class Blackjack:
                 deck.append((value, suit))
             for face_card in ['Jack', 'Queen', 'King', 'Ace']:
                 deck.append((face_card, suit))
+            for face_card in ['Ace']:
+                deck.append((ace, suit))
         random.shuffle(deck)
         return deck
     
@@ -66,7 +68,7 @@ class Blackjack:
                 print("Invalid input! Please enter 'h' or 's'.")
     
     def dealer_turn(self):
-        while self.dealer_score < 17 and not self.game_over:
+        while self.dealer_score < 16 and not self.game_over:
             self.dealer_hand.append(self.deck.pop())
             self.dealer_score = self.calculate_hand_value(self.dealer_hand)
         
