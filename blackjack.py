@@ -24,6 +24,23 @@ class Blackjack:
             self.player_hand.append(self.deck.pop())
             self.dealer_hand.append(self.deck.pop())
     
+    def calculate_hand_value(self, hand):
+        total = 0
+        num_aces = 0
+        for card in hand:
+            if isinstance(card[0], int):
+                total += card[0]
+            elif card[0] in ['Jack', 'Queen', 'King']:
+                total += 10
+            elif card[0] == 'Ace':
+                num_aces += 1
+                total += 11
+        while total > 21 and num_aces > 0:
+            total -= 10
+            num_aces -= 1
+        return total
+    
+    
     def play_game(self):
         print("Welcome to Blackjack!")
         self.deal_initial_cards()
